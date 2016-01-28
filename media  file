@@ -1,0 +1,52 @@
+@echo off
+:START
+echo (1) avi's
+echo (2) mp3's
+echo (3) mkv's
+echo (4) jpeg/jpg's
+echo (5) exit
+choice /M "which files would you like to select?" /C 12345
+	if %errorlevel% EQU 1 call :AVIS
+	if %errorlevel% EQU 2 call :AVIS
+	if %errorlevel% EQU 3 call :AVIS
+	if %errorlevel% EQU 4 call :AVIS
+	if %errorlevel% EQU 5 exit 
+	
+goto :START
+ 
+:AVIS
+rem cd \
+ dir /b /s *.avi > temp.txt
+type temp.txt
+choice /M "are you sure you want to delete the above files?" /c YN
+ if %errorlevel% EQU 1 call  :DELETE
+ exit /b
+ 
+:MP3's
+rem cd \
+ dir /b /s *.mp3 > temp.txt
+type temp.txt
+choice /M "are you sure you want to delete the above files?" /c YN
+ if %errorlevel% EQU 1 call  :DELETE
+exit /b
+
+:MKV's 
+rem cd \
+ dir /b /s *.mkv > temp.txt
+type temp.txt
+choice /M "are you sure you want to delete the above files?" /c YN
+ if %errorlevel% EQU 1 call  :DELETE
+ exit /b
+ 
+:JPG's
+rem cd \
+ dir /b /s *.jpg > temp.txt
+ dir /b /s *.jpeg >> temp.txt
+type temp.txt
+choice /M "are you sure you want to delete the above files?" /c YN
+ if %errorlevel% EQU 1 call  :DELETE
+ exit /b
+
+:DELETE
+for /f 'delims=" %%1 in (temp.txt) do del "%%i"
+exit /b
